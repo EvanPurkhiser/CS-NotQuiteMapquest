@@ -24,11 +24,35 @@ void *calculate_shorest_paths(void *arg)
 {
 	int id = *(int*) arg;
 
-	printf("Syncing thread id %d first\n", id);
+	// Determine the rows we will be calculating
+	int start = id * num_cities / num_threads;
+	int end   = (id + 1) * num_cities / num_threads;
 
-	pthread_barrier_wait(&calc_barrier);
+	for (int k = 0; k < num_cities; ++k)
+	{
+		// Wait for all threads before we do shortest path calculations on the
+		// adjacency matrix for this iteration
+		pthread_barrier_wait(&calc_barrier);
 
-	printf("Syncing thread id %d second\n", id);
+		for (int i = start; i < end; ++i)
+		{
+			for (int j = 0; j < num_cities; ++j)
+			{
+				// Check if there is a faster path through node k
+				int new_dist = distances[i][k] + distances[k][j];
+				if (distances[i][j] <= new_dist)
+					continue;
+
+				// This way is faster! Update the min distance and keep track of
+				// the node that we can travel through to get here
+				distances[i][j] = new_dist;
+				through[i][j] = k;
+			}
+		}
+	}
+
+	printf("    \e[0;33mThread-%d \e[0;32m->\e[0m Finished all calculations for rows %2d => %2d\n",
+		id, start + 1, end);
 
 	return NULL;
 }
