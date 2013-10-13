@@ -69,9 +69,9 @@ int main(int argc, char *argv[])
 
 
 
-	// Free up the cities array
-	for (int i = 0; i < sizeof(cities) / sizeof(cities[0]); ++i)
-		free(cities[i]);
+
+	// Free up the cities array and distances array
+	for (int i = 0; i < sizeof(cities) / sizeof(cities[0]); free(cities[i++]));
 	free(cities);
 	free(distances);
 
