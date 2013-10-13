@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
 			fgets(line, DATA_LINE_MAX_LEN, data_file);
 			sscanf(line, "%d %d %d", &city_a, &city_b, &dist);
 			distances[city_a][city_b] = dist;
+			distances[city_b][city_a] = dist;
 		}
 	}
 
