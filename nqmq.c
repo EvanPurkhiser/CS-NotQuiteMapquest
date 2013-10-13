@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <sys/time.h>
 
 #define DATA_FILE_NAME "nqmq.dat"
 #define DATA_LINE_MAX_LEN 80
@@ -158,16 +159,31 @@ int main(int argc, char *argv[])
 
 	pthread_barrier_init(&calc_barrier, NULL, num_threads);
 
+	struct timeval time_start;
+	struct timeval time_end;
+
 	for (int i = 0; i < num_threads; ++i)
 	{
 		thread_ids[i] = i;
 		pthread_create(&threads[i], NULL, calculate_shorest_paths, &thread_ids[i]);
 	}
 
+	gettimeofday(&time_start, NULL);
+
 	// Wait for calculations to finish
 	for (int i =0; i < num_threads; pthread_join(threads[i++], NULL));
 
-	puts("\e[0;34m==>\e[0m Finished calculating shortest paths.");
+	gettimeofday(&time_end, NULL);
+
+	// Calculate how long it took to find the shortest paths
+	long long execution_time = 1000000LL
+		* (time_end.tv_sec  - time_start.tv_sec)
+		+ (time_end.tv_usec - time_start.tv_usec);+
+
+	printf("\e[0;34m==>\e[0m Finished calculating shortest paths in %lldµ seconds.\n",
+		execution_time);
+
+
 
 
 	// Free up the cities array and distances array
