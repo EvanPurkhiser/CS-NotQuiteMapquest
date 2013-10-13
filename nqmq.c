@@ -6,7 +6,7 @@
 #define DATA_LINE_MAX_LEN 80
 
 char **cities;
-int  *distances;
+int  **distances;
 
 int main(int argc, char *argv[])
 {
@@ -34,19 +34,36 @@ int main(int argc, char *argv[])
 			strcpy(cities[i], line);
 		}
 
-		// Allocate space for the city distances
-		int (*distances)[num_cities] = malloc(sizeof(*distances) * num_cities),
-			city_a = 0,
-			city_b = 0,
-			dist   = 0;
+		// Calculate how much memory we need to allocate for the adjacency
+		// matrix
+		int mem_size = num_cities * sizeof(int*) + num_cities *
+			num_cities * sizeof(int);
+
+		// Allocate the memory (and set it all to null) for the adjacency matrix
+		distances = malloc(mem_size);
+		memset(distances, 0, mem_size);
+
+		// Set the row indexes as pointers to the columns
+		for (int i = 0; i < num_cities; ++i)
+		{
+			distances[i] = (int*)(distances + num_cities+1) + (i * num_cities);
+		}
 
 		// Now read in the adjacency list
-		while (city_a != -1)
+		while (1)
 		{
+			int city_a = 0,
+				city_b = 0,
+				dist   = 0;
+
+			fscanf(data_file, "%d %d %d", &city_a, &city_b, &dist);
 			fgets(line, DATA_LINE_MAX_LEN, data_file);
-			sscanf(line, "%d %d %d", &city_a, &city_b, &dist);
-			distances[city_a][city_b] = dist;
-			distances[city_b][city_a] = dist;
+
+			if (city_a == -1) break;
+
+			// The cities are _NOT_ zero indexed in the data file, we need}
+			distances[city_a - 1][city_b - 1] = dist;
+			distances[city_b - 1][city_a - 1] = dist;
 		}
 	}
 
@@ -56,6 +73,7 @@ int main(int argc, char *argv[])
 	for (int i = 0; i < sizeof(cities) / sizeof(cities[0]); ++i)
 		free(cities[i]);
 	free(cities);
+	free(distances);
 
 	return 0;
 }
