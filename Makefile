@@ -1,7 +1,7 @@
 all: nqmq nqmq.dat
 
 clean:
-	rm nqmq nqmq.dat
+	rm nqmq nqmq.dat report.pdf
 
 report.pdf: report.md
 	pandoc report.md -V geometry:margin=1in -o report.pdf
