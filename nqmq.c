@@ -1,3 +1,4 @@
+#include "pthread.h"
 #include "string.h"
 #include "stdio.h"
 #include "stdlib.h"
@@ -15,6 +16,14 @@ int num_cities = 0;
 // By default use one thread of execution
 int num_threads = 1;
 
+void *calculate_shorest_paths(void *arg)
+{
+	int id = *(int*) arg;
+
+	printf("Syncing thread id %d\n", id);
+
+	return NULL;
+}
 
 int main(int argc, char *argv[])
 {
@@ -103,7 +112,21 @@ int main(int argc, char *argv[])
 		num_threads = atoi(argv[1]);
 	}
 
-	printf("\e[0;34m==>\e[0m Starting up %d threads to calculate shorest paths\n", num_threads);
+	printf("\e[0;34m==>\e[0m Starting up %d threads to calculate shorest paths...\n", num_threads);
+
+	pthread_t threads[num_threads];
+	int thread_ids[num_threads];
+
+	for (int i = 0; i < num_threads; ++i)
+	{
+		thread_ids[i] = i;
+		pthread_create(&threads[i], NULL, calculate_shorest_paths, &thread_ids[i]);
+	}
+
+	// Wait for calulations to finish
+	for (int i =0; i < num_threads; pthread_join(threads[i++], NULL));
+
+	puts("\e[0;34m==>\e[0m Finished calulating shortest paths.");
 
 
 	// Free up the cities array and distances array
