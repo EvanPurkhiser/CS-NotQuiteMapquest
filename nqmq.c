@@ -8,11 +8,12 @@
 
 char **cities;
 int  **distances;
+int  **through;;
 
 int main(int argc, char *argv[])
 {
-	// Read in the needed information from the data file. This includes the city
-	// names as well as the city edges (roads) between cities
+	// Read in the needed information from the data file. Using this data we can
+	// setup the cities array and distances matrix. We will also setup the
 	{
 		char line[DATA_LINE_MAX_LEN];
 		FILE *data_file;
@@ -40,13 +41,15 @@ int main(int argc, char *argv[])
 		int mem_size = num_cities * sizeof(int*) + num_cities *
 			num_cities * sizeof(int);
 
-		// Allocate the memory for the adjacency matrix
+		// Allocate the memory for the adjacency matrix and through matrix
 		distances = malloc(mem_size);
+		through   = malloc(mem_size);
 
 		// Set the row indexes as pointers to the columns
 		for (int i = 0; i < num_cities; ++i)
 		{
-			distances[i] = (int*)(distances + num_cities+1) + (i * num_cities);
+			distances[i]  = (int*)(distances + num_cities+1) + (i * num_cities);
+			through[i]    = (int*)(through   + num_cities+1) + (i * num_cities);
 		}
 
 		// All cities should have a infinite distance between them, we can
