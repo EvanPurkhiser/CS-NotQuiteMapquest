@@ -238,7 +238,7 @@ int main(int argc, char *argv[])
 	}
 
 	print_path_directions(start, end);
-	printf("\n\e[0;32m==>\e[0m Total Distance: %d\n", distances[start][end]);
+	printf("\n\e[0;32m==>\e[0m Total Distance: %d miles\n", distances[start][end]);
 
 	// Free up the cities array and distances array
 	for (int i = 0; i < num_cities; free(cities[i++]));
