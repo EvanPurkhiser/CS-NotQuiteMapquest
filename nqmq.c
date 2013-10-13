@@ -18,6 +18,8 @@ int num_threads = 1;
 
 int main(int argc, char *argv[])
 {
+	puts("\e[0;34m==>\e[0m Reading in values from the data file...");
+
 	// Read in the needed information from the data file. Using this data we can
 	// setup the cities array and distances matrix. We will also setup the
 	{
@@ -40,6 +42,8 @@ int main(int argc, char *argv[])
 			cities[i] = malloc(strlen(line) * sizeof(char));
 			strcpy(cities[i], line);
 		}
+
+		printf("    Read in %d cities...\n", num_cities);
 
 		// Calculate how much memory we need to allocate for the adjacency
 		// matrix
@@ -72,7 +76,8 @@ int main(int argc, char *argv[])
 		for (int i = 0; i < num_cities; distances[i][i] = 0, ++i);
 
 		// Fill in the edges that we know from the data
-		while (1)
+		int total;
+		for (total = 0; 1; ++total)
 		{
 			int city_a = 0,
 				city_b = 0,
@@ -87,6 +92,9 @@ int main(int argc, char *argv[])
 			distances[city_a - 1][city_b - 1] = dist;
 			distances[city_b - 1][city_a - 1] = dist;
 		}
+
+		printf("    Read in %d connecting raods with distances...\n", total);
+		fclose(data_file);
 	}
 
 	// The number of threads to use is the first argument
@@ -95,6 +103,7 @@ int main(int argc, char *argv[])
 		num_threads = atoi(argv[1]);
 	}
 
+	printf("\e[0;34m==>\e[0m Starting up %d threads to calculate shorest paths\n", num_threads);
 
 
 	// Free up the cities array and distances array
