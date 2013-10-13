@@ -230,7 +230,7 @@ int main(int argc, char *argv[])
 	print_path_directions(start, end);
 
 	// Free up the cities array and distances array
-	for (int i = 0; i < sizeof(cities) / sizeof(cities[0]); free(cities[i++]));
+	for (int i = 0; i < num_cities; free(cities[i++]));
 	free(cities);
 	free(distances);
 
