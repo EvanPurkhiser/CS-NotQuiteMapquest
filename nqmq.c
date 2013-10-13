@@ -12,6 +12,10 @@ int  **through;
 
 int num_cities = 0;
 
+// By default use one thread of execution
+int num_threads = 1;
+
+
 int main(int argc, char *argv[])
 {
 	// Read in the needed information from the data file. Using this data we can
@@ -85,6 +89,11 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	// The number of threads to use is the first argument
+	if (argc > 1)
+	{
+		num_threads = atoi(argv[1]);
+	}
 
 
 
