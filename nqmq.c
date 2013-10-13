@@ -1,8 +1,8 @@
-#include "pthread.h"
-#include "string.h"
-#include "stdio.h"
-#include "stdlib.h"
-#include "limits.h"
+#include <pthread.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
 
 #define DATA_FILE_NAME "nqmq.dat"
 #define DATA_LINE_MAX_LEN 80
