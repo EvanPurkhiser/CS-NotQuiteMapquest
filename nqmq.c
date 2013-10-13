@@ -6,7 +6,7 @@
 #define DATA_LINE_MAX_LEN 80
 
 char **cities;
-char *distances;
+int  *distances;
 
 int main(int argc, char *argv[])
 {
@@ -31,7 +31,19 @@ int main(int argc, char *argv[])
 		strcpy(cities[i], line);
 	}
 
+	// Allocate space for the city distances
+	int (*distances)[num_cities] = malloc(sizeof(*distances) * num_cities),
+		city_a = 0,
+		city_b = 0,
+		dist   = 0;
 
+	// Now read in the adjacency list
+	while (city_a != -1)
+	{
+		fgets(line, DATA_LINE_MAX_LEN, data_file);
+		sscanf(line, "%d %d %d", &city_a, &city_b, &dist);
+		distances[city_a][city_b] = dist;
+	}
 
 
 	// Clean things up
