@@ -64,9 +64,19 @@ void *calculate_shorest_paths(void *arg)
 	return NULL;
 }
 
-void print_path_directions(int city_a, int city_b)
+void print_path_directions(int a, int b)
 {
+	int intermediate = through[a][b];
 
+	if (intermediate == -1)
+	{
+		printf("    %s \e[0;32m->\e[0m %s (%d miles)\n", cities[a], cities[b], distances[a][b]);
+	}
+	else
+	{
+		print_path_directions(a, intermediate);
+		print_path_directions(intermediate, b);
+	}
 }
 
 int main(int argc, char *argv[])
