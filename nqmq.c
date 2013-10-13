@@ -1,6 +1,7 @@
 #include "string.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "limits.h"
 
 #define DATA_FILE_NAME    "nqmq.dat"
 #define DATA_LINE_MAX_LEN 80
@@ -39,9 +40,8 @@ int main(int argc, char *argv[])
 		int mem_size = num_cities * sizeof(int*) + num_cities *
 			num_cities * sizeof(int);
 
-		// Allocate the memory (and set it all to null) for the adjacency matrix
+		// Allocate the memory for the adjacency matrix
 		distances = malloc(mem_size);
-		memset(distances, 0, mem_size);
 
 		// Set the row indexes as pointers to the columns
 		for (int i = 0; i < num_cities; ++i)
@@ -49,7 +49,20 @@ int main(int argc, char *argv[])
 			distances[i] = (int*)(distances + num_cities+1) + (i * num_cities);
 		}
 
-		// Now read in the adjacency list
+		// All cities should have a infinite distance between them, we can
+		// represent this with the INT_MAX constant
+		for (int i = 0; i < num_cities; ++i)
+		{
+			for (int j = 0; j < num_cities; ++j)
+			{
+				distances[i][j] = INT_MAX;
+			}
+		}
+
+		// All cities have a 0 distance between their selves
+		for (int i = 0; i < num_cities; distances[i][i] = 0, ++i);
+
+		// Fill in the edges that we know from the data
 		while (1)
 		{
 			int city_a = 0,
