@@ -34,8 +34,10 @@ int main(int argc, char *argv[])
 
 
 
-
-
+	// Clean things up
+	for (int i = 0; i < num_cities; ++i)
+		free(cities[i]);
+	free(cities);
 
 	return 0;
 }
