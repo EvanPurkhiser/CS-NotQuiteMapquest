@@ -64,6 +64,11 @@ void *calculate_shorest_paths(void *arg)
 	return NULL;
 }
 
+void print_path_directions(int city_a, int city_b)
+{
+
+}
+
 int main(int argc, char *argv[])
 {
 	puts("\e[0;34m==>\e[0m Reading in values from the data file...");
@@ -190,11 +195,32 @@ int main(int argc, char *argv[])
 		* (time_end.tv_sec  - time_start.tv_sec)
 		+ (time_end.tv_usec - time_start.tv_usec);+
 
-	printf("\e[0;34m==>\e[0m Finished calculating shortest paths in %lldµ seconds.\n",
+	printf("\e[0;34m==>\e[0m Finished calculating shortest paths in %lldµ seconds.\n\n",
 		execution_time);
 
+	// Display the menu
+	puts("NQMQ Menu");
+	puts("---------");
+	puts("");
 
+	// Display all cities with numbers
+	for (int i = 0; i < num_cities; ++i)
+	{
+		printf("%2d. %s\n", i + 1, cities[i]);
+	}
 
+	int start, end;
+
+	printf("\nPath from: ");
+	scanf("%d", &start);
+	printf("Path to: ");
+	scanf("%d", &end);
+
+	// These need to be zero indexed
+	--start; --end;
+
+	printf("\n\e[0;36m==>\e[0m %s to %s:\n\n", cities[start], cities[end]);
+	print_path_directions(start, end);
 
 	// Free up the cities array and distances array
 	for (int i = 0; i < sizeof(cities) / sizeof(cities[0]); free(cities[i++]));
