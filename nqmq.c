@@ -39,6 +39,12 @@ void *calculate_shorest_paths(void *arg)
 		{
 			for (int j = 0; j < num_cities; ++j)
 			{
+				// If The k node or target node is infinity (INT_MAX) then
+				// we are just going to overflow the numbers. Ignore them.
+				// We can also safely ignore cities between to themselves
+				if (distances[i][k] == INT_MAX || distances[k][j] == INT_MAX || i == j)
+					continue;
+
 				// Check if there is a faster path through node k
 				int new_dist = distances[i][k] + distances[k][j];
 				if (distances[i][j] <= new_dist)
