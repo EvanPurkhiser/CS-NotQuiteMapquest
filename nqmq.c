@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
 		// The first line will be the number of cities
 		fscanf(data_file, "%d", &num_cities);
+		fgets(line, DATA_LINE_MAX_LEN, data_file);
 
 		// Allocate space for the city names
 		cities = malloc(sizeof(char*) * num_cities);
