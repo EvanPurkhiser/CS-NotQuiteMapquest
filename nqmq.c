@@ -16,11 +16,19 @@ int num_cities = 0;
 // By default use one thread of execution
 int num_threads = 1;
 
+// We need a barrier to sync up the threads before doing the next iteration of
+// calculations
+pthread_barrier_t calc_barrier;
+
 void *calculate_shorest_paths(void *arg)
 {
 	int id = *(int*) arg;
 
-	printf("Syncing thread id %d\n", id);
+	printf("Syncing thread id %d first\n", id);
+
+	pthread_barrier_wait(&calc_barrier);
+
+	printf("Syncing thread id %d second\n", id);
 
 	return NULL;
 }
@@ -116,6 +124,8 @@ int main(int argc, char *argv[])
 
 	pthread_t threads[num_threads];
 	int thread_ids[num_threads];
+
+	pthread_barrier_init(&calc_barrier, NULL, num_threads);
 
 	for (int i = 0; i < num_threads; ++i)
 	{
