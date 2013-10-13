@@ -3,12 +3,12 @@
 #include "stdlib.h"
 #include "limits.h"
 
-#define DATA_FILE_NAME    "nqmq.dat"
+#define DATA_FILE_NAME "nqmq.dat"
 #define DATA_LINE_MAX_LEN 80
 
 char **cities;
 int  **distances;
-int  **through;;
+int  **through;
 
 int main(int argc, char *argv[])
 {
@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
 			for (int j = 0; j < num_cities; ++j)
 			{
 				distances[i][j] = INT_MAX;
+				through[i][j]   = -1;
 			}
 		}
 
@@ -77,7 +78,7 @@ int main(int argc, char *argv[])
 
 			if (city_a == -1) break;
 
-			// The cities are _NOT_ zero indexed in the data file, we need}
+			// The cities are _NOT_ zero indexed in the data file
 			distances[city_a - 1][city_b - 1] = dist;
 			distances[city_b - 1][city_a - 1] = dist;
 		}
