@@ -32,7 +32,7 @@ void *calculate_shorest_paths(void *arg)
 	for (int k = 0; k < num_cities; ++k)
 	{
 		// Wait for all threads before we do shortest path calculations on the
-		// adjacency matrix for this iteration
+		// adjacency matrix for this intermediate city
 		pthread_barrier_wait(&calc_barrier);
 
 		for (int i = start; i < end; ++i)
