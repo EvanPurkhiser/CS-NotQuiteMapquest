@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
 	{
 		printf("\e[0;31m==> %d threads is not evenly divisible into %d cities\n",
 			num_threads, num_cities);
-		exit(-1);
+		exit(1);
 	}
 
 	printf("\e[0;34m==>\e[0m Starting up %d threads to calculate shortest paths...\n", num_threads);
@@ -220,6 +220,13 @@ int main(int argc, char *argv[])
 	--start; --end;
 
 	printf("\n\e[0;36m==>\e[0m %s to %s:\n\n", cities[start], cities[end]);
+
+	if (distances[start][end] == INT_MAX)
+	{
+		printf("\e[0;31m==> No path available between these cities");
+		exit(1);
+	}
+
 	print_path_directions(start, end);
 
 	// Free up the cities array and distances array
