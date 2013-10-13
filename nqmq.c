@@ -120,6 +120,13 @@ int main(int argc, char *argv[])
 		num_threads = atoi(argv[1]);
 	}
 
+	if (num_cities % num_threads != 0)
+	{
+		printf("\e[0;31m==> %d threads is not evenly divisible into %d cities\n",
+			num_threads, num_cities);
+		exit(-1);
+	}
+
 	printf("\e[0;34m==>\e[0m Starting up %d threads to calculate shortest paths...\n", num_threads);
 
 	pthread_t threads[num_threads];
