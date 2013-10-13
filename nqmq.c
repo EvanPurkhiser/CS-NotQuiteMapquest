@@ -87,6 +87,10 @@ int main(int argc, char *argv[])
 		for (int i = 0; i < num_cities; ++i)
 		{
 			fgets(line, DATA_LINE_MAX_LEN, data_file);
+
+			// Remove newline
+			line[strlen(line) - 1] = 0;
+
 			cities[i] = malloc(strlen(line) * sizeof(char));
 			strcpy(cities[i], line);
 		}
