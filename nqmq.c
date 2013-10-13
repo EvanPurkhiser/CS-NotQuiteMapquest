@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 			distances[city_b - 1][city_a - 1] = dist;
 		}
 
-		printf("    Read in %d connecting raods with distances...\n", total);
+		printf("    Read in %d connecting roads with distances...\n", total);
 		fclose(data_file);
 	}
 
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 		num_threads = atoi(argv[1]);
 	}
 
-	printf("\e[0;34m==>\e[0m Starting up %d threads to calculate shorest paths...\n", num_threads);
+	printf("\e[0;34m==>\e[0m Starting up %d threads to calculate shortest paths...\n", num_threads);
 
 	pthread_t threads[num_threads];
 	int thread_ids[num_threads];
@@ -133,10 +133,10 @@ int main(int argc, char *argv[])
 		pthread_create(&threads[i], NULL, calculate_shorest_paths, &thread_ids[i]);
 	}
 
-	// Wait for calulations to finish
+	// Wait for calculations to finish
 	for (int i =0; i < num_threads; pthread_join(threads[i++], NULL));
 
-	puts("\e[0;34m==>\e[0m Finished calulating shortest paths.");
+	puts("\e[0;34m==>\e[0m Finished calculating shortest paths.");
 
 
 	// Free up the cities array and distances array
