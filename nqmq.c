@@ -10,6 +10,8 @@ char **cities;
 int  **distances;
 int  **through;
 
+int num_cities = 0;
+
 int main(int argc, char *argv[])
 {
 	// Read in the needed information from the data file. Using this data we can
@@ -17,7 +19,6 @@ int main(int argc, char *argv[])
 	{
 		char line[DATA_LINE_MAX_LEN];
 		FILE *data_file;
-		int  num_cities = 0;
 
 		data_file = fopen(DATA_FILE_NAME, "r");
 
