@@ -124,8 +124,8 @@ int main(int argc, char *argv[])
 		// Set the row indexes as pointers to the columns
 		for (int i = 0; i < num_cities; ++i)
 		{
-			distances[i]  = (int*)(distances + num_cities+1) + (i * num_cities);
-			through[i]    = (int*)(through   + num_cities+1) + (i * num_cities);
+			distances[i]  = (int*)(distances + num_cities + 1) + (i * num_cities);
+			through[i]    = (int*)(through   + num_cities + 1) + (i * num_cities);
 		}
 
 		// All cities should have a infinite distance between them, we can
@@ -147,13 +147,14 @@ int main(int argc, char *argv[])
 		for (total = 0; 1; ++total)
 		{
 			int city_a = 0,
-				city_b = 0,
-				dist   = 0;
+			    city_b = 0,
+			    dist   = 0;
 
 			fscanf(data_file, "%d %d %d", &city_a, &city_b, &dist);
 			fgets(line, DATA_LINE_MAX_LEN, data_file);
 
-			if (city_a == -1) break;
+			if (city_a == -1)
+				break;
 
 			// The cities are _NOT_ zero indexed in the data file
 			distances[city_a - 1][city_b - 1] = dist;
